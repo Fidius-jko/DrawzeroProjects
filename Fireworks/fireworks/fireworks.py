@@ -3,12 +3,13 @@ from math import sin, cos, radians
 from dataclasses import dataclass
 from drawzero import *
 
-from common import Vec2, type_color
-from consts import GRAVITY, RESISTANCE
+from fireworks.common import Vec2, type_color
+from fireworks.consts import GRAVITY, RESISTANCE
+
 
 class FireworkOptions:
     pos: Vec2
-    color: (int,int,int)
+    color: (int, int, int)  # rgb
     count: int
     speed: (int, int)
 
@@ -18,15 +19,17 @@ class FireworkOptions:
         self.count = count
         self.speed = speed
 
+
 @dataclass
 class Ball:
     pos: Vec2
     speed: Vec2
 
+
 class Firework:
     balls: [Ball]
     color: C
-    tcolor: int
+    tcolor: int  # enum
     ticks: int
     gradient: Gradient
     is_empty: bool
@@ -36,14 +39,11 @@ class Firework:
         self.color = color
 
     def make_balls(self, pos, count, speed):
-
         for i in range(count):
             speed2 = uniform(speed[0], speed[1])
             a = uniform(-180, 180)
             dx = cos(radians(a))
             dy = sin(radians(a))
-            # почему не можем просто Ball(pos, ...)?
-            # Если так сделаем то у всех шаров будет позиция указывать на один объект
             self.balls.append(Ball(pos.clone(), Vec2(dx * speed2, dy * speed2)))
 
     def __init__(self, options: FireworkOptions):
@@ -77,11 +77,12 @@ class Firework:
             elif self.tcolor == 1:
                 filled_circle(self.color(self.ticks), (i.pos.x, i.pos.y), 4)
 
+
 class Fireworks:
-    fireworks = []
+    fireworks: []
 
     def __init__(self):
-        pass
+        self.fireworks = []
 
     def make_firework(self, options: FireworkOptions):
         self.fireworks.append(Firework(options))
