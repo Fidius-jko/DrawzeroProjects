@@ -1,7 +1,9 @@
 from random import randint
 from drawzero import *
 
+# for tools
 from fireworks.default_import import *
+# for tools
 
 fireworks = Fireworks()
 gun = Gun(fireworks, Vec2(250, 250))
